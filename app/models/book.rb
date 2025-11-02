@@ -1,5 +1,13 @@
 class Book < ApplicationRecord
-  # ... (associations from before)
+  # Many-to-many associations
+  has_many :book_authors, dependent: :destroy
+  has_many :authors, through: :book_authors
+
+  has_many :book_subjects, dependent: :destroy
+  has_many :subjects, through: :book_subjects
+
+  # One-to-many association
+  has_many :reviews, dependent: :destroy
 
   # Validations (Feature 1.6)
   validates :title, presence: true, length: { minimum: 1, maximum: 500 }
@@ -10,12 +18,6 @@ class Book < ApplicationRecord
     less_than_or_equal_to: 2030,
     allow_nil: true
   }
-  validates :rating, numericality: {
-    only_integer: true,
-    greater_than_or_equal_to: 1,
-    less_than_or_equal_to: 5,
-    allow_nil: true
-  }, if: -> { rating.present? }
 
   # Helper method for cover image URL
   def cover_image_url(size = 'M')

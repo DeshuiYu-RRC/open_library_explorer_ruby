@@ -62,7 +62,8 @@ group :test do
   gem "selenium-webdriver"
 end
 
-# group :development, :test do
-  # ... other gems
+
 gem 'faker'
-# end
+
+# Pagination
+gem 'kaminari'

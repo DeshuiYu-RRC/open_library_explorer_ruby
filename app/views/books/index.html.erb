@@ -1,2 +1,62 @@
-<h1>Books#index</h1>
-<p>Find me in app/views/books/index.html.erb</p>
+<!-- Feature 3.1 - Collection Navigation -->
+<div class="row mb-4">
+  <div class="col-md-12">
+    <h1>All Books</h1>
+    <p class="text-muted">
+      Showing <%= @books.size %> of <%= @total_books %> books
+    </p>
+  </div>
+</div>
+
+<!-- Books Grid -->
+<div class="row">
+  <% @books.each do |book| %>
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="card h-100">
+        <%= link_to book_path(book) do %>
+          <%= image_tag book.cover_image_url('M'),
+                        alt: book.title,
+                        class: "card-img-top book-cover",
+                        style: "height: 300px; object-fit: cover;" %>
+        <% end %>
+
+        <div class="card-body">
+          <h5 class="card-title">
+            <%= link_to book.title.truncate(50), book_path(book),
+                        class: "text-decoration-none" %>
+          </h5>
+
+          <p class="card-text text-muted small">
+            <% if book.authors.any? %>
+              by <%= book.authors.pluck(:name).join(', ').truncate(50) %>
+            <% else %>
+              Unknown Author
+            <% end %>
+          </p>
+
+          <% if book.first_publish_year.present? %>
+            <p class="card-text">
+              <small class="text-muted">
+                Published: <%= book.first_publish_year %>
+              </small>
+            </p>
+          <% end %>
+
+          <div class="star-rating">
+            <%= '⭐' * book.average_rating.round %>
+            <small class="text-muted">
+              (<%= book.reviews.count %> reviews)
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- Feature 3.5 - Pagination -->
+<div class="row mt-4">
+  <div class="col-md-12 text-center">
+    <%= paginate @books %>
+  </div>
+</div>

@@ -1,2 +1,128 @@
-<h1>Pages#about</h1>
-<p>Find me in app/views/pages/about.html.erb</p>
+<div class="row">
+  <div class="col-md-12">
+    <h1>About Open Library Explorer</h1>
+    <p class="lead">A Ruby on Rails application showcasing book data from Open Library API</p>
+  </div>
+</div>
+
+<hr>
+
+<!-- Project Statistics -->
+<div class="row mb-4">
+  <div class="col-md-12">
+    <h2>Database Statistics</h2>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center">
+      <div class="card-body">
+        <h3 class="card-title"><%= @total_books %></h3>
+        <p class="card-text">Books</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center">
+      <div class="card-body">
+        <h3 class="card-title"><%= @total_authors %></h3>
+        <p class="card-text">Authors</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center">
+      <div class="card-body">
+        <h3 class="card-title"><%= @total_subjects %></h3>
+        <p class="card-text">Subjects</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center">
+      <div class="card-body">
+        <h3 class="card-title"><%= @total_reviews %></h3>
+        <p class="card-text">Reviews</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Data Sources Section -->
+<div class="row mb-4">
+  <div class="col-md-12">
+    <h2>Data Sources</h2>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Source 1: Open Library Search API</h5>
+        <p><strong>Purpose:</strong> Search for books by subject/genre to build our initial dataset</p>
+        <p><strong>Endpoint:</strong> <code>https://openlibrary.org/search.json?subject={subject}&limit=100</code></p>
+        <p><strong>Data Retrieved:</strong> Work keys, titles, author keys, publication years, ISBN, cover IDs</p>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Source 2: Open Library Works API</h5>
+        <p><strong>Purpose:</strong> Get detailed information about each book</p>
+        <p><strong>Endpoint:</strong> <code>https://openlibrary.org/works/{work_id}.json</code></p>
+        <p><strong>Data Retrieved:</strong> Full descriptions, subjects, covers array, detailed metadata</p>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Source 3: Open Library Authors API</h5>
+        <p><strong>Purpose:</strong> Get comprehensive author information</p>
+        <p><strong>Endpoint:</strong> <code>https://openlibrary.org/authors/{author_id}.json</code></p>
+        <p><strong>Data Retrieved:</strong> Author bio, birth/death dates, photos, alternate names</p>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Source 4: Faker Gem</h5>
+        <p><strong>Purpose:</strong> Generate realistic user reviews and ratings</p>
+        <p><strong>Data Generated:</strong> Reviewer names, review text, ratings (1-5 stars), review dates</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Database ERD Section -->
+<div class="row mb-4">
+  <div class="col-md-12">
+    <h2>Database ERD</h2>
+    <div class="card">
+      <div class="card-body text-center">
+        <%= image_tag "Rails_Intro_Project_ERD.png",
+                      alt: "Database ERD Diagram",
+                      class: "img-fluid",
+                      style: "max-width: 100%; height: auto; border: 1px solid #ddd; padding: 10px; background: white;" %>
+        <p class="mt-3 text-muted">
+          <small>Database Entity Relationship Diagram showing Books, Authors, Subjects, Reviews, and their relationships</small>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Database Integration -->
+<div class="row mb-4">
+  <div class="col-md-12">
+    <h2>Database Integration Plan</h2>
+    <ol>
+      <li><strong>Initial Seed:</strong> Query Search API for multiple subjects (science_fiction, fantasy, mystery, romance, horror) to get about 50 books per subject</li>
+      <li><strong>Enrichment:</strong> For each work key, fetch full details from Works API</li>
+      <li><strong>Author Details:</strong> Extract author keys and fetch author profiles</li>
+      <li><strong>Subject Extraction:</strong> Parse subjects from works data to populate subjects table</li>
+      <li><strong>Review Generation:</strong> Use Faker to create 3-10 reviews per book</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Back Button -->
+<div class="row">
+  <div class="col-md-12 text-center">
+    <%= link_to "← Back to Books", root_path, class: "btn btn-primary btn-lg" %>
+  </div>
+</div>

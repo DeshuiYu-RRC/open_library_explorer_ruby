@@ -1,2 +1,89 @@
-<h1>Authors#index</h1>
-<p>Find me in app/views/authors/index.html.erb</p>
+<div class="row mb-4">
+  <div class="col-md-12">
+    <h1>Authors Directory</h1>
+    <p class="text-muted">
+      Showing <%= @authors.size %> of <%= @total_authors %> authors
+    </p>
+  </div>
+</div>
+
+<!-- Authors Table with Bio -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-dark">
+        <tr>
+          <th style="width: 80px;">Photo</th>
+          <th style="width: 200px;">Name</th>
+          <th>Biography</th>
+          <th style="width: 100px;">Books</th>
+          <th style="width: 150px;">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @authors.each do |author| %>
+          <tr>
+            <!-- Author Photo -->
+            <td>
+              <% if author.photo_url.present? %>
+                <%= image_tag author.photo_url,
+                              alt: author.name,
+                              class: "rounded",
+                              style: "width: 60px; height: 80px; object-fit: cover;" %>
+              <% else %>
+                <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded"
+                     style="width: 60px; height: 80px; font-size: 24px;">
+                  <%= author.name[0].upcase %>
+                </div>
+              <% end %>
+            </td>
+
+            <!-- Author Name -->
+            <td class="align-middle">
+              <strong><%= link_to author.name, author_path(author), class: "text-decoration-none" %></strong>
+              <br>
+              <small class="text-muted">
+                <% if author.birth_date.present? %>
+                  <%= author.birth_date %>
+                  <% if author.death_date.present? %>
+                    - <%= author.death_date %>
+                  <% end %>
+                <% end %>
+              </small>
+            </td>
+
+            <!-- Biography Preview -->
+            <td class="align-middle">
+              <% if author.bio.present? %>
+                <%= truncate(author.bio, length: 150) %>
+              <% else %>
+                <em class="text-muted">No biography available</em>
+              <% end %>
+            </td>
+
+            <!-- Number of Books -->
+            <td class="align-middle text-center">
+                <span class="badge bg-primary rounded-pill">
+                  <%= author.books.count %>
+                </span>
+            </td>
+
+            <!-- Actions -->
+            <td class="align-middle">
+              <%= link_to "View Details", author_path(author), class: "btn btn-sm btn-outline-primary" %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Pagination -->
+<div class="row mt-4">
+  <div class="col-md-12 text-center">
+    <%= paginate @authors %>
+  </div>
+</div>
